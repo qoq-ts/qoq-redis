@@ -1,11 +1,11 @@
 import { Slot } from 'qoq';
 import IORedis, { RedisOptions, Redis as TRedis } from 'ioredis';
 
-interface RedisProps {
+export interface RedisContextProps {
   redis: TRedis;
 }
 
-export class Redis extends Slot<Slot.Mix, RedisProps> {
+export class Redis extends Slot<Slot.Mix, RedisContextProps> {
   protected readonly instance: TRedis;
 
   constructor(options: RedisOptions = {}) {
