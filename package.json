@@ -1,6 +1,6 @@
 {
   "name": "qoq-redis",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "types/index.d.ts",
@@ -17,9 +17,9 @@
     "qoq": ">=0.0.8"
   },
   "dependencies": {
-    "@types/ioredis": "^4.19.3",
-    "ioredis": "^4.22.0",
-    "tslib": "^2.1.0"
+    "@types/ioredis": "4.19.3",
+    "ioredis": "4.22.0",
+    "tslib": "2.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
