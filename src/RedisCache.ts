@@ -2,7 +2,7 @@ import { BaseCache, BaseCacheOptions } from 'qoq';
 import IORedis, { RedisOptions, Redis } from 'ioredis';
 
 export interface RedisCacheOptions extends BaseCacheOptions {
-  type: 'qoq-redis/RedisCache';
+  slot: 'qoq-redis/RedisCache';
   redisOptions: RedisOptions | Redis;
 }
 

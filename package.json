@@ -1,6 +1,6 @@
 {
   "name": "qoq-redis",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "types/index.d.ts",
@@ -29,7 +29,7 @@
     "chai": "^4.3.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "qoq": "^0.0.10",
+    "qoq": "^0.0.12",
     "supertest": "^6.1.3",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
