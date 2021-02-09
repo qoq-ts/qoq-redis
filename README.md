@@ -2,6 +2,9 @@
 redis for qoq based on [ioredis](https://github.com/luin/ioredis).
 
 [![License](https://img.shields.io/github/license/qoq-ts/qoq-redis)](https://github.com/qoq-ts/qoq-redis/blob/master/LICENSE)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/qoq-ts/qoq-redis/CI/master)](https://github.com/qoq-ts/qoq-redis/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/qoq-ts/qoq-redis)](https://codecov.io/gh/qoq-ts/qoq-redis)
+[![npm](https://img.shields.io/npm/v/qoq-redis)](https://www.npmjs.com/package/qoq-redis)
 
 # Installation
 ```bash
@@ -13,21 +16,14 @@ yarn add qoq-redis
 import { WebSlotManager, ConsoleSlotManager, createConfig } from 'qoq';
 import { Redis, RedisOptions } from 'qoq-redis';
 
-// config.[env].ts
 const redisOptions = createConfig<RedisOptions>({
   ...
 });
 
-// bootstrap/redis.ts
-const redis = new Redis(redisOptions);
-
-// bootstrap/web.ts
-const webSlots = WebSlotManager.use(redis);
-
-// bootstrap/console.ts
-const consoleSlots = ConsoleSlotManager.use(redis);
+const webSlots = WebSlotManager.use(new Redis(redisOptions));
 ```
-The feel free to use in request or commands
+
+Then feel free to use in request or commands
 ```typescript
 import { createWebRouter } from 'qoq';
 
@@ -41,14 +37,13 @@ router
   });
 ```
 
-# Create cache middleware from redis
+# Create cache middleware
 ```diff
 import { WebSlotManager, ConsoleSlotManager, createConfig } from 'qoq';
-+ import { Cache } from 'qoq';
 import { Redis, RedisOptions } from 'qoq-redis';
++ import { Cache } from 'qoq';
 + import { RedisCacheOptions } from 'qoq-redis';
 
-// config.[env].ts
 const redisOptions = createConfig<RedisOptions>({
   ...
 });
@@ -57,19 +52,9 @@ const redisOptions = createConfig<RedisOptions>({
 +  redisOptions: redisOptions,
 + });
 
-// bootstrap/redis.ts
-const redis = new Redis(redisOptions);
-+ const cache = new Cache(cacheOptions);
-
-// bootstrap/web.ts
 const webSlots = WebSlotManager
-  .use(redis);
-+ .use(cache);
-
-// bootstrap/console.ts
-const consoleSlots = ConsoleSlotManager
-  .use(redis)
-+ .use(cache);
+  .use(new Redis(redisOptions));
++ .use(new Cache(cacheOptions));
 ```
 
 # Options

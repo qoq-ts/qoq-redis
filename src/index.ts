@@ -1,3 +1,3 @@
 export { Redis } from './Redis';
-export { RedisCacheOptions } from './RedisCache';
-export { RedisOptions } from 'ioredis';
+export { RedisCacheOptions, RedisCache } from './RedisCache';
+export { RedisOptions, Redis as RedisInstance } from 'ioredis';

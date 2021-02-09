@@ -29,18 +29,18 @@ export class RedisCache extends BaseCache {
     return value;
   }
 
-  protected async setValue(key: string, value: string, duration: number): Promise<boolean> {
-    const result = duration === 0
+  protected async setValue(key: string, value: string, ttl?: number): Promise<boolean> {
+    const result = ttl === undefined
       ? await this.redis.set(key, value)
-      : await this.redis.set(key, value, 'PX', duration);
+      : await this.redis.set(key, value, 'PX', ttl);
 
     return result === 'OK';
   }
 
-  protected async addValue(key: string, value: string, duration: number): Promise<boolean> {
-    const result = duration === 0
+  protected async addValue(key: string, value: string, ttl?: number): Promise<boolean> {
+    const result = ttl === undefined
       ? await this.redis.set(key, value, 'NX')
-      : await this.redis.set(key, value, 'PX', duration, 'NX');
+      : await this.redis.set(key, value, 'PX', ttl, 'NX');
 
     return result === 'OK';
   }
