@@ -10,7 +10,7 @@ describe('Redis Cache', () => {
 
   beforeEach(() => {
     cache = new RedisCache({
-      slot: 'qoq-redis/RedisCache',
+      engine: 'qoq-redis/RedisCache',
       redisOptions: {
         ...redisOptions,
         db: ++db,
@@ -106,7 +106,7 @@ describe('Redis Cache', () => {
     const redis = new IORedis(redisOptions);
 
     cache = new RedisCache({
-      slot: 'qoq-redis/RedisCache',
+      engine: 'qoq-redis/RedisCache',
       redisOptions: redis,
     });
 

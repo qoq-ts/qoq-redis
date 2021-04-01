@@ -1,18 +1,15 @@
 import { expect } from 'chai';
-import IORedis from 'ioredis';
-import { compose } from 'qoq';
-import { Redis, RedisInstance } from '../src';
+import { testMiddleware } from 'qoq';
+import { Redis, RedisSlot } from '../src';
 import { redisOptions } from './redisOptions';
 
 describe('redis slot', () => {
   it ('will inject ctx.redis', async () => {
-    const ctx: { redis?: RedisInstance } = {};
-    const redis = new Redis(redisOptions);
-
-    await compose([redis])(ctx);
+    const redis = new RedisSlot(redisOptions);
+    const ctx = await testMiddleware(redis)({});
 
     expect(ctx).has.property('redis');
-    expect(ctx.redis).to.instanceOf(IORedis);
-    expect(redis.getInstance()).to.instanceOf(IORedis);
+    expect(ctx.redis).to.instanceOf(Redis);
+    expect(redis.redis).to.instanceOf(Redis);
   });
 });

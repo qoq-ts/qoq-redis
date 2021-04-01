@@ -1,8 +1,9 @@
 import { BaseCache, BaseCacheOptions } from 'qoq';
-import IORedis, { RedisOptions, Redis } from 'ioredis';
+import { RedisOptions } from 'ioredis';
+import { Redis } from './Redis';
 
 export interface RedisCacheOptions extends BaseCacheOptions {
-  slot: 'qoq-redis/RedisCache';
+  engine: 'qoq-redis/RedisCache';
   redisOptions: RedisOptions | Redis;
 }
 
@@ -11,9 +12,9 @@ export class RedisCache extends BaseCache {
 
   constructor(config: RedisCacheOptions) {
     super(config);
-    this.redis = config.redisOptions instanceof IORedis
+    this.redis = config.redisOptions instanceof Redis
       ? config.redisOptions
-      : new IORedis(config.redisOptions);
+      : new Redis(config.redisOptions);
   }
 
   public async exists(key: string): Promise<boolean> {

@@ -13,14 +13,14 @@ yarn add qoq-redis
 
 # Create redis middleware
 ```typescript
-import { WebSlotManager, ConsoleSlotManager, createConfig } from 'qoq';
-import { Redis, RedisOptions } from 'qoq-redis';
+import { WebSlotManager, defineConfig } from 'qoq';
+import { RedisSlot, RedisOptions } from 'qoq-redis';
 
-const redisOptions = createConfig<RedisOptions>({
+const redisOptions = defineConfig<RedisOptions>({
   ...
 });
 
-const webSlots = WebSlotManager.use(new Redis(redisOptions));
+const webSlots = WebSlotManager.use(new RedisSlot(redisOptions));
 ```
 
 Then feel free to use in request or commands
@@ -39,22 +39,22 @@ router
 
 # Create cache middleware
 ```diff
-import { WebSlotManager, ConsoleSlotManager, createConfig } from 'qoq';
+import { WebSlotManager, ConsoleSlotManager, defineConfig } from 'qoq';
 import { Redis, RedisOptions } from 'qoq-redis';
-+ import { Cache } from 'qoq';
++ import { CacheSlot } from 'qoq';
 + import { RedisCacheOptions } from 'qoq-redis';
 
-const redisOptions = createConfig<RedisOptions>({
+const redisOptions = defineConfig<RedisOptions>({
   ...
 });
-+ const cacheOptions = createConfig<RedisCacheOptions>({
-+  slot: 'qoq-redis/RedisCache',
++ const cacheOptions = defineConfig<RedisCacheOptions>({
++  engine: 'qoq-redis/RedisCache',
 +  redisOptions: redisOptions,
 + });
 
 const webSlots = WebSlotManager
-  .use(new Redis(redisOptions));
-+ .use(new Cache(cacheOptions));
+  .use(new RedisSlot(redisOptions))
++ .use(new CacheSlot(cacheOptions));
 ```
 
 # Options
