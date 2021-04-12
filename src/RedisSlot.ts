@@ -1,5 +1,5 @@
 import { Slot } from 'qoq';
-import IORedis, { RedisOptions } from 'ioredis';
+import { RedisOptions } from 'ioredis';
 import { Redis } from './Redis';
 
 export interface RedisContextProps {
@@ -13,7 +13,7 @@ export class RedisSlot extends Slot<Slot.Mix, RedisContextProps> {
     super();
     const instance
       = this.redis
-      = options instanceof Redis ? options : new IORedis(options);
+      = options instanceof Redis ? options : new Redis(options);
 
     this.use((ctx, next) => {
       ctx.redis = instance;

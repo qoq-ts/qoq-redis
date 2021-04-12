@@ -3,7 +3,7 @@ import { RedisOptions } from 'ioredis';
 import { Redis } from './Redis';
 
 export interface RedisCacheOptions extends BaseCacheOptions {
-  engine: 'qoq-redis/RedisCache';
+  engine: new (...args: any[]) => RedisCache;
   redisOptions: RedisOptions | Redis;
 }
 

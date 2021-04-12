@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import IORedis from 'ioredis';
 import sleep from 'sleep-promise';
-import { RedisCache } from '../src';
+import { Redis, RedisCache } from '../src';
 import { redisOptions } from './redisOptions';
 
 describe('Redis Cache', () => {
@@ -10,7 +9,7 @@ describe('Redis Cache', () => {
 
   beforeEach(() => {
     cache = new RedisCache({
-      engine: 'qoq-redis/RedisCache',
+      engine: RedisCache,
       redisOptions: {
         ...redisOptions,
         db: ++db,
@@ -103,13 +102,16 @@ describe('Redis Cache', () => {
   });
 
   it ('can input redis instance instead of options', async () => {
-    const redis = new IORedis(redisOptions);
+    const redis = new Redis(redisOptions);
 
     cache = new RedisCache({
-      engine: 'qoq-redis/RedisCache',
+      engine: RedisCache,
       redisOptions: redis,
     });
 
     expect(await cache.get('hello')).to.be.null;
+
+    await cache.set('hello', 'world');
+    expect(await cache.get('hello')).to.equal('world');
   });
 });
