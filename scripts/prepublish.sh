@@ -2,14 +2,18 @@
 
 set -e
 
-rm -rf ./es/ ./lib/ ./types/
+rm -rf ./es/ ./lib/
 
 rm -rf ./build
-./node_modules/.bin/tsc
+./node_modules/.bin/tsc  --module commonjs
 mv ./build/src ./lib
 
 rm -rf ./build
-./node_modules/.bin/tsc --module ES6
+./node_modules/.bin/tsc
 mv ./build/src ./es
 
-mv ./build/types/src ./types
+cat > ./es/package.json <<EOF
+{
+  "type": "module"
+}
+EOF

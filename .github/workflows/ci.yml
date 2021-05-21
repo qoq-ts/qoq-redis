@@ -15,25 +15,25 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [10.17.0, 10.x, 12.13.0, 12.x, 14.15.0, 14.x]
+        node-version: [14.15.0, 14.x]
         ts-version: [4.1.2]
         redis-version: [4, 5, 6]
 
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }} & Typescript ${{ matrix.ts-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: |
-        yarn install
-        yarn add typescript@${{ matrix.ts-version }} --dev
-    - run: yarn test ${{ matrix.redis-version }}
-    - name: Coverage
-      uses: codecov/codecov-action@v1
-      if: matrix.node-version == '12.13.0' && matrix.ts-version == '4.1.2' && matrix.redis-version == '4' && github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-latest'
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }} & Typescript ${{ matrix.ts-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          yarn install
+          yarn add typescript@${{ matrix.ts-version }} --dev
+      - run: yarn test ${{ matrix.redis-version }}
+      - name: Coverage
+        uses: codecov/codecov-action@v1
+        if: matrix.node-version == '12.13.0' && matrix.ts-version == '4.1.2' && matrix.redis-version == '4' && github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-latest'
   publish:
     if: "!contains(toJson(github.event.commits), '[skip ci]')"
     needs: test

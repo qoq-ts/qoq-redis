@@ -1,4 +1,5 @@
 # qoq-redis
+
 redis for qoq based on [ioredis](https://github.com/luin/ioredis).
 
 [![License](https://img.shields.io/github/license/qoq-ts/qoq-redis)](https://github.com/qoq-ts/qoq-redis/blob/master/LICENSE)
@@ -7,11 +8,13 @@ redis for qoq based on [ioredis](https://github.com/luin/ioredis).
 [![npm](https://img.shields.io/npm/v/qoq-redis)](https://www.npmjs.com/package/qoq-redis)
 
 # Installation
+
 ```bash
 yarn add qoq-redis
 ```
 
 # Create redis middleware
+
 ```typescript
 import { WebSlotManager, defineConfig } from 'qoq';
 import { RedisSlot, RedisOptions } from 'qoq-redis';
@@ -24,20 +27,20 @@ const webSlots = WebSlotManager.use(new RedisSlot(redisOptions));
 ```
 
 Then feel free to use in request or commands
+
 ```typescript
 import { createWebRouter } from 'qoq';
 
 export const router = createWebRouter(webSlots);
 
-router
-  .get('/')
-  .action(async (ctx) => {
-    await ctx.redis.set('hello', 'world');
-    ctx.send('OK');
-  });
+router.get('/').action(async (ctx) => {
+  await ctx.redis.set('hello', 'world');
+  ctx.body = 'OK';
+});
 ```
 
 # Create cache middleware
+
 ```diff
 import { WebSlotManager, ConsoleSlotManager, defineConfig } from 'qoq';
 import { Redis, RedisOptions } from 'qoq-redis';
@@ -58,4 +61,5 @@ const webSlots = WebSlotManager
 ```
 
 # Options
+
 @see [ioredis](https://github.com/luin/ioredis/blob/master/README.md)

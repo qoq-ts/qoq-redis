@@ -12,9 +12,12 @@ export class RedisCache extends BaseCache {
 
   constructor(config: RedisCacheOptions) {
     super(config);
-    this.redis = config.redisOptions instanceof Redis
-      ? config.redisOptions
-      : new Redis(config.redisOptions);
+    this.redis =
+      config.redisOptions instanceof Redis ? config.redisOptions : new Redis(config.redisOptions);
+  }
+
+  public disconnect() {
+    return this.redis.disconnect();
   }
 
   public async exists(key: string): Promise<boolean> {
@@ -31,17 +34,19 @@ export class RedisCache extends BaseCache {
   }
 
   protected async setValue(key: string, value: string, ttl?: number): Promise<boolean> {
-    const result = ttl === undefined
-      ? await this.redis.set(key, value)
-      : await this.redis.set(key, value, 'PX', ttl);
+    const result =
+      ttl === undefined
+        ? await this.redis.set(key, value)
+        : await this.redis.set(key, value, 'PX', ttl);
 
     return result === 'OK';
   }
 
   protected async addValue(key: string, value: string, ttl?: number): Promise<boolean> {
-    const result = ttl === undefined
-      ? await this.redis.set(key, value, 'NX')
-      : await this.redis.set(key, value, 'PX', ttl, 'NX');
+    const result =
+      ttl === undefined
+        ? await this.redis.set(key, value, 'NX')
+        : await this.redis.set(key, value, 'PX', ttl, 'NX');
 
     return result === 'OK';
   }
